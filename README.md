@@ -4,18 +4,19 @@
     class FastMap
     {
      ...
-    }
-    
-    More pre parametrized classes (Utility)
+    }  
+      
+    // More pre parametrized classes (Utility)
     template<typename Key, typename Value, typename MaxCapacity = uint32_t>  
     - FastMapMaxSize8Bit  
     - FastMapMaxSize16Bit  
     - FastMapMaxSize32Bit  
     - FastMapMaxSize64Bit  
+        
+*Example usage*
 
-**Example usage**
-    FastMap<int, int, uint16_t> map(1024); // I don't need more than 65535 elements (optimization)  
-                                           // 1024: capacity must be power of 2  
+    FastMap<int, int, uint16_t> map(1024); // uint16_t : I don't need more than 65535 elements (optimization)  
+                                           // 1024 : capacity must be power of 2  
     map.Insert(5, 20);  
     map.Erase(5);  
     map.Find(5);  
