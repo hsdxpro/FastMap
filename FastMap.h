@@ -33,13 +33,11 @@ template<typename Val> class SmallestContainer { public: typedef typename TypeCh
 //		- Value can be any size
 //		- MaxCapacity can be any size, default 32 bit
 
-template<typename Key, typename Value, typename MaxCapacity = uint32_t>
+template<typename Key, typename Value, typename MaxSize = uint32_t, typename MaxCapacity = uint32_t>
 class FastMap
 {
 	typedef typename SmallestContainer<Key>::Type Hash;
-	typedef typename MaxCapacity BucketOffset;
-	typedef typename SmallestContainer<uint8_t[sizeof(MaxCapacity) / 2]>::Type HalfMaxCapacity;
-	typedef typename HalfMaxCapacity BucketSize;
+	typedef typename SmallestContainer<uint8_t[sizeof(MaxSize) / 2]>::Type BucketSize; // This is a half of max size
 
 	// TODO: too large struct -> cache miss
 	// TODO: struct reorder with respect to member sizes
@@ -67,10 +65,10 @@ public:
 
 	// - capacity : The intended capacity for container
 	// - capacityMultiplier : Increasing this will improve Find(...) performance, but container will use memory
-	inline FastMap(MaxCapacity capacity, MaxCapacity capacityMultiplier = 2)
+	inline FastMap(MaxSize capacity, MaxSize capacityMultiplier = 2)
 	: size(0)
 	{
-		assert((uint64_t)capacity * capacityMultiplier <= std::numeric_limits<MaxCapacity>::max());
+		assert((uint64_t)capacity * capacityMultiplier <= std::numeric_limits<MaxSize>::max());
 
 		// Potentially more memory usage when capacityMultiplier > 1, but less collision -> faster Find(...)
 		capacity *= capacityMultiplier;
@@ -128,7 +126,7 @@ public:
 		return (Hash)key; // key can be float, etc reinterpret it
 	}
 
-	inline MaxCapacity CalcDesiredPos(Hash hash)
+	inline MaxSize CalcDesiredPos(Hash hash)
 	{
 		return capacityAndMask & hash;
 	}
@@ -375,43 +373,54 @@ public:
 protected:
 	Pair* pairs;
 
-	MaxCapacity size;
+	MaxSize size;
 	MaxCapacity capacityAndMask;
 };
 
-
-// 16 bit capacity instance
-template<typename Key, typename Value>
-class FastMap16BitCap : public FastMap < Key, Value, uint16_t >
+// 8 bit max size instance
+template<typename Key, typename Value, typename MaxSize = uint8_t, typename MaxCapacity = uint32_t>
+class FastMapMaxSize8Bit : public FastMap < Key, Value, MaxSize, MaxCapacity >
 {
 public:
-	inline FastMap16BitCap() : FastMap<Key, Value, uint16_t>(){}
+	inline FastMapMaxSize8Bit() : FastMap<Key, Value, MaxSize, MaxCapacity>(){}
 
 	// - capacity : The intended capacity for container
 	// - capacityMultiplier : Increasing this will improve Find(...) performance, but container will use memory
-	inline FastMap16BitCap(uint16_t capacity, uint16_t capacityMultiplier = 2) : FastMap<Key, Value, uint16_t>(capacity, capacityMultiplier){}
+	inline FastMapMaxSize8Bit(MaxCapacity capacity, MaxCapacity capacityMultiplier = 2) : FastMap<Key, Value, MaxSize, MaxCapacity>(capacity, capacityMultiplier){}
 };
 
-// 32 bit capacity instance
-template<typename Key, typename Value>
-class FastMap32BitCap : public FastMap < Key, Value, uint32_t >
+// 16 bit max size instance
+template<typename Key, typename Value, typename MaxSize = uint16_t, typename MaxCapacity = uint32_t>
+class FastMapMaxSize16Bit : public FastMap < Key, Value, MaxSize, MaxCapacity >
 {
 public:
-	inline FastMap32BitCap() : FastMap<Key, Value, uint32_t>(){}
+	inline FastMapMaxSize16Bit() : FastMap<Key, Value, MaxSize, MaxCapacity>(){}
 
 	// - capacity : The intended capacity for container
 	// - capacityMultiplier : Increasing this will improve Find(...) performance, but container will use memory
-	inline FastMap32BitCap(uint32_t capacity, uint32_t capacityMultiplier = 2) : FastMap<Key, Value, uint32_t>(capacity, capacityMultiplier){}
+	inline FastMapMaxSize16Bit(MaxCapacity capacity, MaxCapacity capacityMultiplier = 2) : FastMap<Key, Value, MaxSize, MaxCapacity>(capacity, capacityMultiplier){}
 };
 
-// 64 bit capacity instance
-template<typename Key, typename Value>
-class FastMap64BitCap : public FastMap < Key, Value, uint64_t >
+// 32 bit max size instance
+template<typename Key, typename Value, typename MaxSize = uint32_t, typename MaxCapacity = uint32_t>
+class FastMapMaxSize32Bit : public FastMap < Key, Value, MaxSize, MaxCapacity >
 {
 public:
-	inline FastMap64BitCap() : FastMap<Key, Value, uint64_t>(){}
+	inline FastMapMaxSize32Bit() : FastMap<Key, Value, MaxSize, MaxCapacity>(){}
 
 	// - capacity : The intended capacity for container
 	// - capacityMultiplier : Increasing this will improve Find(...) performance, but container will use memory
-	inline FastMap64BitCap(uint64_t capacity, uint64_t capacityMultiplier = 2) : FastMap<Key, Value, uint64_t>(capacity, capacityMultiplier){}
+	inline FastMapMaxSize32Bit(MaxCapacity capacity, MaxCapacity capacityMultiplier = 2) : FastMap<Key, Value, MaxSize, MaxCapacity>(capacity, capacityMultiplier){}
+};
+
+// 64 bit max size instance
+template<typename Key, typename Value, typename MaxSize = uint64_t, typename MaxCapacity = uint32_t>
+class FastMapMaxSize64Bit : public FastMap < Key, Value, MaxSize, MaxCapacity >
+{
+public:
+	inline FastMapMaxSize64Bit() : FastMap<Key, Value, MaxSize, MaxCapacity>(){}
+
+	// - capacity : The intended capacity for container
+	// - capacityMultiplier : Increasing this will improve Find(...) performance, but container will use memory
+	inline FastMapMaxSize64Bit(MaxCapacity capacity, MaxCapacity capacityMultiplier = 2) : FastMap<Key, Value, MaxSize, MaxCapacity>(capacity, capacityMultiplier){}
 };
