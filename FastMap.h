@@ -378,49 +378,49 @@ protected:
 };
 
 // 8 bit max size instance
-template<typename Key, typename Value, typename MaxSize = uint8_t, typename MaxCapacity = uint32_t>
-class FastMapMaxSize8Bit : public FastMap < Key, Value, MaxSize, MaxCapacity >
+template<typename Key, typename Value, typename MaxCapacity = uint32_t>
+class FastMapMaxSize8Bit : public FastMap < Key, Value, uint8_t, MaxCapacity >
 {
 public:
-	inline FastMapMaxSize8Bit() : FastMap<Key, Value, MaxSize, MaxCapacity>(){}
+	inline FastMapMaxSize8Bit() : FastMap<Key, Value, uint8_t, MaxCapacity>(){}
 
 	// - capacity : The intended capacity for container
 	// - capacityMultiplier : Increasing this will improve Find(...) performance, but container will use memory
-	inline FastMapMaxSize8Bit(MaxCapacity capacity, MaxCapacity capacityMultiplier = 2) : FastMap<Key, Value, MaxSize, MaxCapacity>(capacity, capacityMultiplier){}
+	inline FastMapMaxSize8Bit(MaxCapacity capacity, MaxCapacity capacityMultiplier = 2) : FastMap<Key, Value, uint8_t, MaxCapacity>(capacity, capacityMultiplier){}
 };
 
 // 16 bit max size instance
-template<typename Key, typename Value, typename MaxSize = uint16_t, typename MaxCapacity = uint32_t>
-class FastMapMaxSize16Bit : public FastMap < Key, Value, MaxSize, MaxCapacity >
+template<typename Key, typename Value, typename MaxCapacity = uint32_t>
+class FastMapMaxSize16Bit : public FastMap < Key, Value, uint16_t, MaxCapacity >
 {
 public:
-	inline FastMapMaxSize16Bit() : FastMap<Key, Value, MaxSize, MaxCapacity>(){}
+	inline FastMapMaxSize16Bit() : FastMap<Key, Value, uint16_t, MaxCapacity>(){}
 
 	// - capacity : The intended capacity for container
 	// - capacityMultiplier : Increasing this will improve Find(...) performance, but container will use memory
-	inline FastMapMaxSize16Bit(MaxCapacity capacity, MaxCapacity capacityMultiplier = 2) : FastMap<Key, Value, MaxSize, MaxCapacity>(capacity, capacityMultiplier){}
+	inline FastMapMaxSize16Bit(MaxCapacity capacity, MaxCapacity capacityMultiplier = 2) : FastMap<Key, Value, uint16_t, MaxCapacity>(capacity, capacityMultiplier){}
 };
 
 // 32 bit max size instance
-template<typename Key, typename Value, typename MaxSize = uint32_t, typename MaxCapacity = uint32_t>
-class FastMapMaxSize32Bit : public FastMap < Key, Value, MaxSize, MaxCapacity >
+template<typename Key, typename Value, typename MaxCapacity = uint32_t>
+class FastMapMaxSize32Bit : public FastMap < Key, Value, uint32_t, MaxCapacity >
 {
 public:
-	inline FastMapMaxSize32Bit() : FastMap<Key, Value, MaxSize, MaxCapacity>(){}
+	inline FastMapMaxSize32Bit() : FastMap<Key, Value, uint32_t, MaxCapacity>(){}
 
 	// - capacity : The intended capacity for container
 	// - capacityMultiplier : Increasing this will improve Find(...) performance, but container will use memory
-	inline FastMapMaxSize32Bit(MaxCapacity capacity, MaxCapacity capacityMultiplier = 2) : FastMap<Key, Value, MaxSize, MaxCapacity>(capacity, capacityMultiplier){}
+	inline FastMapMaxSize32Bit(MaxCapacity capacity, MaxCapacity capacityMultiplier = 2) : FastMap<Key, Value, uint32_t, MaxCapacity>(capacity, capacityMultiplier){}
 };
 
 // 64 bit max size instance
-template<typename Key, typename Value, typename MaxSize = uint64_t, typename MaxCapacity = uint32_t>
-class FastMapMaxSize64Bit : public FastMap < Key, Value, MaxSize, MaxCapacity >
+template<typename Key, typename Value, typename MaxCapacity = uint32_t>
+class FastMapMaxSize64Bit : public FastMap < Key, Value, uint64_t, MaxCapacity >
 {
 public:
-	inline FastMapMaxSize64Bit() : FastMap<Key, Value, MaxSize, MaxCapacity>(){}
+	inline FastMapMaxSize64Bit() : FastMap<Key, Value, uint64_t, MaxCapacity>(){}
 
 	// - capacity : The intended capacity for container
 	// - capacityMultiplier : Increasing this will improve Find(...) performance, but container will use memory
-	inline FastMapMaxSize64Bit(MaxCapacity capacity, MaxCapacity capacityMultiplier = 2) : FastMap<Key, Value, MaxSize, MaxCapacity>(capacity, capacityMultiplier){}
+	inline FastMapMaxSize64Bit(MaxCapacity capacity, MaxCapacity capacityMultiplier = 2) : FastMap<Key, Value, uint64_t, MaxCapacity>(capacity, capacityMultiplier){}
 };
